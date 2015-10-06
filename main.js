@@ -4,17 +4,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* eslint no-path-concat: 0, func-names:0 */
-var app = require('app');
-var BrowserWindow = require('browser-window');
-var menuHelper = require('./backend/MenuHelper')
 
 require('electron-debug')();
 require('crash-reporter').start();
 
 var app = require('app');
-var BrowserWindow = require('browser-window');
 var devHelper = require('./vendor/electron-boilerplate/app/vendor/electron_boilerplate/dev_helper');
-var windowStateKeeper = require('./vendor/electron-boilerplate/app/vendor/electron_boilerplate/window_state');
 var globalShortcut = require('global-shortcut');
 var assert = require('assert');
 var jetpack = require('fs-jetpack');
@@ -26,11 +21,12 @@ var Definition = require('./backend/model/definition');
 var Dictionary = require('./backend/model/dictionary');
 var OnlineSource = require('./backend/model/onlineSource');
 
+var windowHelper = require('./backend/WindowHelper');
+
 var Sequelize = require('sequelize');
 
 var trayIcon = null;
-var mainWindow = null;
-var mainWindowState;
+
 
 app.on('ready', function () {
 
@@ -42,64 +38,13 @@ app.on('ready', function () {
 
 });
 
-function openDashboardWindow() {
-
-  if(mainWindow != null){
-    mainWindow.show();
-    mainWindow.restore();
-    return;
-  }
-
-  // Preserver of the window size and position between app launches.
-  mainWindowState = windowStateKeeper('main', {
-    width: 1000,
-    height: 600
-  });
-
-  var windowOptions = {
-    width: mainWindowState.width,
-    height: mainWindowState.height,
-    transparent: true
-  };
-
-  // Center the window if this is the first run
-  if(mainWindowState.x == undefined){
-    windowOptions.center = true;
-  }
-  else{
-    windowOptions.x = mainWindowState.x;
-    windowOptions.y = mainWindowState.y;
-  }
-
-  mainWindow = new BrowserWindow(windowOptions);
-  menuHelper.createApplicationMenu(mainWindow);
-
-  if (mainWindowState.isMaximized) {
-    mainWindow.maximize();
-  }
-
-  if (process.env.HOT) {
-    mainWindow.loadUrl('file://' + __dirname + '/view/hot-dev-app.html');
-  } else {
-    mainWindow.loadUrl('file://' + __dirname + '/view/app.html');
-  }
-
-  mainWindow.show();
-  mainWindow.restore();
-
-  mainWindow.on('close', function () {
-    mainWindowState.saveState(mainWindow);
-    mainWindow = null;
-  });
-}
-
 function initializeSystemTray() {
   trayIcon = new Tray('view/images/icon.png');
   var contextMenu = Menu.buildFromTemplate([
     {   
       label: 'Dashboard',
       accelerator: 'CmdOrCtrl+D',
-      click: openDashboardWindow
+      click: windowHelper.openDashboardWindow
     },
     { label: 'Verbose', type: 'checkbox', checked: true },
     {   
@@ -121,7 +66,7 @@ function registerGlobalShortcuts() {
 
   // Register a 'ctrl+x' shortcut listener.
   var ret = globalShortcut.register(DASHBOARD_OPEN_SHORTCUT, function() {
-    openDashboardWindow();
+    windowHelper.openDashboardWindow();
   });
 
   var ret = globalShortcut.register(COPY_SHORTCUT, function() {

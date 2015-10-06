@@ -6,7 +6,7 @@
 'use strict';
 
 var Sequelize = require('sequelize');
-var sequelize = require('../sequelize');
+var sequelize = require('../Sequelize');
 var Definition = require('./definition');
 
 var Dictionary = sequelize.define('dictionary', {

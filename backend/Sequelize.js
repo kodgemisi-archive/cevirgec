@@ -6,7 +6,7 @@
 'use strict';
 
 var Sequelize = require('sequelize');
-var applicationManager = require('./application_manager');
+var applicationManager = require('./ApplicationManager');
 
 var sequelize = new Sequelize('', '', null, {
   dialect: 'sqlite',
