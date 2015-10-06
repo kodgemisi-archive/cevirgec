@@ -1,0 +1,3 @@
+[submodule "vendor/electron-boilerplate"]
+	path = vendor/electron-boilerplate
+	url = https://github.com/szwacz/electron-boilerplate.git
