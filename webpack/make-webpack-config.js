@@ -18,7 +18,7 @@ module.exports = function(opts) {
   var loaders = {
     'jsx': opts.hotComponents ? [ 'react-hot-loader', 'babel-loader' ] : 'babel-loader',
     'js': {
-      loader: 'babel-loader',
+      loaders: opts.hotComponents ? [ 'react-hot-loader', 'babel-loader' ] : 'babel-loader',
       include: appRoot
     },
     'json': 'json-loader',

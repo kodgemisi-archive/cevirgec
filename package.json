@@ -56,6 +56,7 @@
     "file-loader": "^0.8.4",
     "fs-jetpack": "^0.7.0",
     "html-loader": "^0.3.0",
+    "immutable": "^3.7.5",
     "json-loader": "^0.5.2",
     "loaders-by-extension": "^1.0.0",
     "markdown-loader": "^0.1.7",
@@ -83,6 +84,6 @@
     "keymirror": "^0.1.1",
     "object-assign": "^4.0.1",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^1.0.0-rc1"
   }
 }

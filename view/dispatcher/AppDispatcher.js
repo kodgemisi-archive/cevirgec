@@ -1,40 +1,16 @@
+/* Copyright (c) 2015 Kod Gemisi Ltd. 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+ 'use strict';
+
+import type {DictionaryAction} from './DictionaryActions';
+
 import {Dispatcher} from 'flux';
-import assign from 'object-assign';
-import PayloadSources from '../constants/PayloadSources';
-import debug from '../utils/debug';
 
-var dd = debug('AppDispatcher');
+const instance: Dispatcher<Action> = new Dispatcher();
+export default instance;
 
-
-export default assign(new Dispatcher(), {
-
-  handleServerAction(action) {
-    dd('server action', action);
-
-    if (!action.type) {
-      throw new Error('Empty action.type: you likely mistyped the action.');
-    }
-
-    var payload = {
-      source: PayloadSources.SERVER_ACTION,
-      action: action
-    };
-
-    this.dispatch(payload);
-  },
-
-  handleViewAction(action) {
-    dd('view action', action);
-
-    if (!action.type) {
-      throw new Error('Empty action.type: you likely mistyped the action.');
-    }
-
-    var payload = {
-      source: PayloadSources.VIEW_ACTION,
-      action: action
-    };
-
-    this.dispatch(payload);
-  }
-});
+// So we can conveniently do, `import {dispatch} from './dispatcher';`
+export const dispatch = instance.dispatch.bind(instance);
