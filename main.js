@@ -1,3 +1,8 @@
+/* Copyright (c) 2015 Kod Gemisi Ltd. 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 /* eslint no-path-concat: 0, func-names:0 */
 var app = require('app');
 var BrowserWindow = require('browser-window');
