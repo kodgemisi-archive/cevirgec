@@ -3,6 +3,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+'use strict';
+
 var BrowserWindow = require('browser-window');
 var windowStateKeeper = require('../vendor/electron-boilerplate/app/vendor/electron_boilerplate/window_state');
 var menuHelper = require('./MenuHelper')

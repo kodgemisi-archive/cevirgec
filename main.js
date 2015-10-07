@@ -12,10 +12,10 @@ require('crash-reporter').start();
 
 var app = require('app');
 var devHelper = require('./vendor/electron-boilerplate/app/vendor/electron_boilerplate/dev_helper');
-var globalShortcut = require('global-shortcut');
+
 var assert = require('assert');
 var jetpack = require('fs-jetpack');
-
+var globalShortcut = require('global-shortcut');
 var Menu = require('menu');
 var Tray = require('tray');
 
@@ -24,6 +24,7 @@ var Dictionary = require('./backend/model/Dictionary');
 var OnlineSource = require('./backend/model/OnlineSource');
 
 var windowHelper = require('./backend/WindowHelper');
+var shortcutHelper = require('./backend/ShortcutHelper');
 
 var Sequelize = require('sequelize');
 
@@ -35,7 +36,7 @@ app.on('ready', function () {
 
   initializeSystemTray();
 
-  registerGlobalShortcuts();
+  shortcutHelper.registerGlobalShortcuts();
 
 });
 
@@ -59,27 +60,6 @@ function initializeSystemTray() {
     ]);
   trayIcon.setToolTip('This is my application.');
   trayIcon.setContextMenu(contextMenu);
-}
-
-function registerGlobalShortcuts() {
-  var DASHBOARD_OPEN_SHORTCUT = 'ctrl+alt+x';
-  var COPY_SHORTCUT = 'ctrl+alt+c';
-
-  // Register a 'ctrl+x' shortcut listener.
-  var ret = globalShortcut.register(DASHBOARD_OPEN_SHORTCUT, function() {
-    windowHelper.openDashboardWindow();
-  });
-
-  var ret = globalShortcut.register(COPY_SHORTCUT, function() {
-    console.log("copy");
-  });
-
-  if (!ret) {
-    console.log('registration failed');
-  }
-
-  // Check whether a shortcut is registered.
-  console.log(DASHBOARD_OPEN_SHORTCUT + ' is registered ' + globalShortcut.isRegistered(DASHBOARD_OPEN_SHORTCUT));
 }
 
 function testDatabase() {
