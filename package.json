@@ -11,7 +11,7 @@
     "build": "webpack --config webpack/webpack.config.production.js --progress --profile --colors",
     "start": "electron .",
     "start-dev": "NODE_ENV=development electron .",
-    "start-hot": "HOT=1 NODE_ENV=development electron .",
+    "start-hot": "HOT=1 NODE_ENV=development electron --debug .",
     "package": "node package.js",
     "package-all": "node package.js --all"
   },
