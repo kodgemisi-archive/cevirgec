@@ -5,6 +5,8 @@
 
 /* eslint no-path-concat: 0, func-names:0 */
 
+'use strict';
+
 require('electron-debug')();
 require('crash-reporter').start();
 
@@ -17,16 +19,15 @@ var jetpack = require('fs-jetpack');
 var Menu = require('menu');
 var Tray = require('tray');
 
-var Definition = require('./backend/model/definition');
-var Dictionary = require('./backend/model/dictionary');
-var OnlineSource = require('./backend/model/onlineSource');
+var Definition = require('./backend/model/Definition');
+var Dictionary = require('./backend/model/Dictionary');
+var OnlineSource = require('./backend/model/OnlineSource');
 
 var windowHelper = require('./backend/WindowHelper');
 
 var Sequelize = require('sequelize');
 
 var trayIcon = null;
-
 
 app.on('ready', function () {
 

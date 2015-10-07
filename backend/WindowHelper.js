@@ -52,7 +52,7 @@ function openDashboardWindow() {
     mainWindow.loadUrl('file://' + __dirname + '/../view/app.html');
   }
 
-  mainWindow.webContents.on('did-finish-load', function() {
+  mainWindow.webContents.on('dom-ready', function() {
     mainWindow.show();
     mainWindow.restore();
   });

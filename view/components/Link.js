@@ -5,18 +5,15 @@
 
 'use strict';
 
-import React from 'react/addons';
+import React, {Component} from 'react';
 import { Link } from 'react-router';
 
-class Home extends React.Component {
+class MyLink extends Component {
   render() {
     return (
-      <div>
-        <div className="notice">This is homepage!</div>
-        <Link className="notice" to="/dashboard">Dashboard</Link>
-      </div>
+      <div>zaa</div>
     );
   }
 }
 
-export default Home;
+export default MyLink;

@@ -5,13 +5,19 @@
 
 'use strict';
 
-import React from 'react/addons';
-import {Component} from 'react';
+import React, {Component} from 'react';
+import DocumentTitle from 'react-document-title';
+
 import DictionaryStore from '../stores/DictionaryStore';
-import DictionaryActions from '../actions/DictionaryActions';
 import Constants from '../utils/constants';
 import {dispatch} from '../dispatcher/AppDispatcher';
 import {Container} from 'flux/utils';
+
+import { Link } from 'react-router';
+
+import tr from '../utils/Translation';
+
+import '../styles/dashboard.scss';
 
 class Dashboard extends Component {
 
@@ -20,40 +26,105 @@ class Dashboard extends Component {
   }
 
   static calculateState(prevState: ?State): State {
-    return {
-      dictionaries: DictionaryStore.getState()
-    };
+    return {};
   }
 
   render() {
-
-    var dicts = [];
-
-    for (let [id, todo] of this.state.dictionaries) {
-      dicts.push(<li key={id} >{todo}</li>);
-    }
     return (
-      <div className="dashboard-component">
-        <h3>Huloooo Dashboard</h3>
-        <div>
-          <ul>
-            {dicts}
-          </ul>
-        </div>
-        <input type="text" ref="dictName" name="dictName"></input>
-        {/*http://stackoverflow.com/questions/29577977/react-ref-and-setstate-not-working-with-es6*/}
-        <input type="submit" id="createDict" onClick={this._onCreateClick.bind(this)}></input>
-      </div>
-    );
-  }
+      <DocumentTitle title={tr('Cevirgec › Dashboard')}>
+        <dashboard className="ui four column grid">
 
-  _onCreateClick() {
-    var dictName = React.findDOMNode(this.refs.dictName).value.trim();
-    React.findDOMNode(this.refs.dictName).value = '';
-    dispatch({
-      type: Constants.DICTIONARY_CREATE,
-      name: dictName,
-    });
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="book icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Dictionaries')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="student icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Study')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="file text outline icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Quiz')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="browser icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Online Dictionaries')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="shop icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Market')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="settings icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Settings')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="help icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('Help')}</a>
+              </div>
+            </div>
+          </div>
+
+          <div className="column center aligned">
+            <div className="ui fluid card">
+              <Link to="/settings" className="content">
+                <i className="info icon"></i>
+              </Link>
+              <div className="content">
+                <a className="header">{tr('About')}</a>
+              </div>
+            </div>
+          </div>
+
+        </dashboard>
+      </DocumentTitle>
+    );
   }
 }
 
