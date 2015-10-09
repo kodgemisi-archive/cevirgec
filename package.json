@@ -82,6 +82,7 @@
     "gulp-watch": "^4.3.5",
     "html-loader": "^0.3.0",
     "immutable": "^3.7.5",
+    "jquery": "^2.1.4",
     "json-loader": "^0.5.2",
     "loaders-by-extension": "^1.0.0",
     "map-stream": "0.0.6",
