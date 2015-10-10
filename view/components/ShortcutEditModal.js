@@ -13,11 +13,13 @@ import tr from '../utils/Translation';
 
 class ShortcutEditModal extends Component {
 
+  thisDOMElement = null;
+
   componentDidUpdate() {
     console.log('componentDidUpdate');
 
     if(this.props.show) {
-      jQuery('#shortcutEditModal')
+      jQuery(this.thisDOMElement.getDOMNode())
         .modal({
           blurring: true,
           onApprove: function (element) {
@@ -41,7 +43,7 @@ class ShortcutEditModal extends Component {
     // }
 
     return (
-      <section id="shortcutEditModal" className="ui basic modal">
+      <section id="shortcutEditModal" className="ui basic modal" ref={(c) => this.thisDOMElement = c}>
         <i className="close icon"></i>
         <div className="header">
           {tr('Set new shortcut for')} {this.props.name}

@@ -40,7 +40,7 @@ class Shortcuts extends Component {
               <div className="item">
                 <div className="right floated content">
                   <kbd>Ctrl</kbd> + <kbd>C</kbd>
-                  <button className="ui icon button"> <i className="edit icon"></i> </button>
+                  {/*<button className="ui icon button"> <i className="edit icon"></i> </button>*/}
                 </div>
                 <i className="plus icon"></i>
                 <div className="content">
@@ -51,7 +51,7 @@ class Shortcuts extends Component {
               <div className="item">
                 <div className="right floated content">
                   <kbd>Ctrl</kbd> + <kbd>C</kbd>
-                  <button className="ui icon button"> <i className="edit icon"></i> </button>
+                  {/*<button className="ui icon button"> <i className="edit icon"></i> </button>*/}
                 </div>
                 <i className="search icon"></i>
                 <div className="content">
@@ -62,7 +62,7 @@ class Shortcuts extends Component {
               <div className="item">
                 <div className="right floated content">
                   <kbd>Ctrl</kbd> + <kbd>C</kbd>
-                  <button className="ui icon button"> <i className="edit icon"></i> </button>
+                  {/*<button className="ui icon button"> <i className="edit icon"></i> </button>*/}
                 </div>
                 <i className="dashboard icon"></i>
                 <div className="content">
@@ -73,7 +73,7 @@ class Shortcuts extends Component {
               <div className="item">
                 <div className="right floated content">
                   <kbd>Ctrl</kbd> + <kbd>C</kbd>
-                  <button className="ui icon button" onClick={this.openModal.bind(this, 'TOGGLE_VERBOSE')}> <i className="edit icon"></i> </button>
+                  {/*<button className="ui icon button" onClick={this.openModal.bind(this, 'TOGGLE_VERBOSE')}> <i className="edit icon"></i> </button>*/}
                 </div>
                 <i className="announcement icon"></i>
                 <div className="content">
@@ -83,7 +83,7 @@ class Shortcuts extends Component {
               </div>
             </div>
           </div>
-          <ShortcutEditModal ref={(c) => this._modal = c} keyBinding={this.state.selectedShortcutKey} name={this.state.selectedShortcutName} show={this.state.showShortcutEditModal} />
+          <ShortcutEditModal ref={(c) => this._modal = c} key={this.state.selectedShortcutKey} name={this.state.selectedShortcutName} show={this.state.showShortcutEditModal} />
         </div>
       </DocumentTitle>
     );

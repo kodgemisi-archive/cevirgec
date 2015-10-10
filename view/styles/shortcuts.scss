@@ -24,4 +24,9 @@
     button {
         margin-left: 10px;
     }
+
+    // temporary, need to delete after edit buttons re-enabled
+    .ui.list[class*="middle aligned"] .image, .ui.list[class*="middle aligned"] .content, .ui.list [class*="middle aligned"] {
+      margin-top: 7px;
+    }
 }
