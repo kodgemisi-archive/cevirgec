@@ -1,4 +1,4 @@
-/* Copyright (c) 2015 Kod Gemisi Ltd. 
+/* Copyright (c) 2015 Kod Gemisi Ltd.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -7,13 +7,13 @@
 
 import Immutable from 'immutable';
 
-const TodoRecord = Immutable.Record({
+const DictionaryRecord = Immutable.Record({
   id: undefined,
   complete: undefined,
   text: undefined,
 });
 
-export default class Todo extends TodoRecord {
+export default class Dictionary extends DictionaryRecord {
   constructor(text: string) {
     super({
       id: Date.now() + Math.round(Math.random() * 1000),

@@ -1,4 +1,4 @@
-/* Copyright (c) 2015 Kod Gemisi Ltd. 
+/* Copyright (c) 2015 Kod Gemisi Ltd.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -28,6 +28,8 @@ var shortcutHelper = require('./backend/ShortcutHelper');
 
 var Sequelize = require('sequelize');
 
+require('./backend/dao/DictionaryDao');
+
 var trayIcon = null;
 
 app.on('ready', function () {
@@ -43,13 +45,13 @@ app.on('ready', function () {
 function initializeSystemTray() {
   trayIcon = new Tray('view/images/icon.png');
   var contextMenu = Menu.buildFromTemplate([
-    {   
+    {
       label: 'Dashboard',
       accelerator: 'CmdOrCtrl+D',
       click: windowHelper.openDashboardWindow
     },
     { label: 'Verbose', type: 'checkbox', checked: true },
-    {   
+    {
       label: 'Quit',
       accelerator: 'CmdOrCtrl+Q',
       selector: 'terminate:',
@@ -63,7 +65,6 @@ function initializeSystemTray() {
 }
 
 function testDatabase() {
-  var databaseFilePath = jetpack.cwd(app.getPath('appData')).path('database.sqlite');
 
   Definition.create({
     key: 'javascript',

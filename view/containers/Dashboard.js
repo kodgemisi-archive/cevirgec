@@ -1,4 +1,4 @@
-/* Copyright (c) 2015 Kod Gemisi Ltd. 
+/* Copyright (c) 2015 Kod Gemisi Ltd.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -36,7 +36,7 @@ class Dashboard extends Component {
 
           <div className="column center aligned">
             <div className="ui fluid card">
-              <Link to="/settings" className="content">
+              <Link to="/dictionaries" className="content">
                 <i className="book icon"></i>
               </Link>
               <div className="content">
