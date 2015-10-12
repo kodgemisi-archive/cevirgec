@@ -8,6 +8,9 @@ import Shortcuts from './components/Shortcuts';
 import Dictionaries from './containers/Dictionaries';
 import DictionaryList from './components/DictionaryList';
 
+// need to initialize dao
+import DictionaryDao from './dao/DictionaryDao';
+
 import { Router, Route, IndexRoute, Redirect, Link } from 'react-router';
 
 import './app.scss';

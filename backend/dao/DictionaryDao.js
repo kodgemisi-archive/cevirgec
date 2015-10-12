@@ -7,6 +7,8 @@
 var ipc = require('ipc');
 var Dictionary = require('../model/Dictionary');
 
+var Constants = require('../../view/utils/constants');
+
 class DictionaryDao {
   constructor() {
   }
@@ -20,14 +22,30 @@ class DictionaryDao {
 
 var dictionaryDao = new DictionaryDao();
 
-ipc.on('dictionary-create', function(event, dictionaryObj) {
-  console.log(dictionaryObj);
+ipc.on(Constants.LOAD_DICTIONARIES_IPC, function(event, data) {
+  console.log('LOAD_DICTIONARIES_IPC');
 
-  dictionaryDao.create()
-    .then(function (createdModel) {
-      event.sender.send('dictionary-created', createdModel.dataValues);
+  Dictionary.findAll()
+    .then(function (resultArray) {
+      var values = resultArray
+        .map(function (entity) {
+          return entity.dataValues;
+        });
+
+      event.sender.send(Constants.DICTIONARIES_LOADED_IPC, values);
     });
 
 });
+
+ipc.on(Constants.DICTIONARY_CREATE_IPC, function(event, dictionaryObj) {
+  console.log('DICTIONARY_CREATE_IPC', dictionaryObj);
+
+  Dictionary.create(dictionaryObj)
+    .then(function (createdModel) {
+      event.sender.send(Constants.DICTIONARY_CREATED_IPC, createdModel.dataValues);
+    });
+
+});
+
 
 module.exports = dictionaryDao;

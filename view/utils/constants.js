@@ -6,7 +6,19 @@
 var keyMirror = require('react/lib/keyMirror');
 
 module.exports = keyMirror({
+
+  // DictionaryDao
   DICTIONARY_CREATE: null,
   DICTIONARY_DESTROY: null,
-  DICTIONARIES_CHANGED: null
+  LOAD_DICTIONARIES: null,
+
+  // DictionaryStore
+  DICTIONARIES_LOADED: null,
+  DICTIONARY_ADDED: null,
+
+  // IPC
+  DICTIONARY_CREATE_IPC: null,
+  DICTIONARY_CREATED_IPC: null,
+  DICTIONARIES_LOADED_IPC: null,
+  LOAD_DICTIONARIES_IPC: null
 });

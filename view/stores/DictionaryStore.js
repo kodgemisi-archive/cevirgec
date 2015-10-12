@@ -17,9 +17,9 @@ var ipc = require('ipc');
 // Set up the store, If we didn't care about order we could just use MapStore
 type State = Immutable.OrderedMap<string, Dictionary>;
 
-var dictionariesCache = Immutable.OrderedMap();
-
 class DictionaryStore extends ReduceStore<string, Dictionary> {
+
+  _isLoading = true;
 
   getInitialState(): State {
     return Immutable.OrderedMap();
@@ -27,42 +27,26 @@ class DictionaryStore extends ReduceStore<string, Dictionary> {
 
   reduce (state: State, action: Action): State {
     switch (action.type) {
-      case Constants.DICTIONARY_DESTROY:
-        return state.setIn([action.id, 'complete'], true);
 
-      case Constants.DICTIONARY_CREATE:
-        return createDictionary(state, action.name);
+      case Constants.DICTIONARIES_LOADED:
+        this._isLoading = false;
+        return action.data;
 
-      case Constants.DICTIONARIES_CHANGED:
-        state = dictionariesCache;
-        window.x = state;
-        return state;
+      case Constants.DICTIONARY_ADDED:
+        return state.set(action.data.id, action.data);
 
       default:
         return state;
     }
   }
 
-  areAllComplete(): boolean {
-    return this.getState().every(todo => todo.complete);
+  isLoading(): boolean {
+    return this._isLoading;
   }
 }
 
 // Export a singleton instance of the store, could do this some other way if
 // you want to avoid singletons.
 const dictionaryStore = new DictionaryStore(AppDispatcher);
-
-ipc.on('dictionary-created', function(newDictionary) {
-  dictionariesCache = dictionariesCache.set(newDictionary.id, newDictionary);
-  dispatch({
-    type: Constants.DICTIONARIES_CHANGED
-  });
-});
-
-// Pure helper function to create a new Todo and add it to the state.
-function createDictionary(state: State, text: ?string): State {
-  ipc.send('dictionary-create', {name: 'test'});
-  return state;
-}
 
 export default dictionaryStore;

@@ -9,9 +9,10 @@ import React, {Component} from 'react';
 import {Container} from 'flux/utils';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
-import {dispatch} from '../dispatcher/AppDispatcher';
+import DataSourceDispatcher, {dispatch} from '../dispatcher/DataSourceDispatcher';
 import Constants from '../utils/constants';
 import DictionaryStore from '../stores/DictionaryStore';
+import DictionaryList from '../components/DictionaryList';
 
 import tr from '../utils/Translation';
 
@@ -23,14 +24,23 @@ class Dictionaries extends Component {
 
   static calculateState(prevState: ?State): State {
     return {
-      dictionaries : DictionaryStore.getState()
+      dictionaries : DictionaryStore.getState(),
+      isLoading: DictionaryStore.isLoading()
     }
   }
 
   _createDictionary() {
-    dispatch({
+    DataSourceDispatcher.dispatch({
       type: Constants.DICTIONARY_CREATE,
-      name: 'zaa test'
+      data: {
+        name: 'zaa test'
+      }
+    });
+  }
+
+  componentWillMount() {
+    DataSourceDispatcher.dispatch({
+      type: Constants.LOAD_DICTIONARIES
     });
   }
 
@@ -39,6 +49,38 @@ class Dictionaries extends Component {
   }
 
   render() {
+
+    var loading = (() => {
+      if(this.state.isLoading) {
+        return (
+          <div className="ui active inverted dimmer">
+            <p className="ui text loader">{tr('Loading')}</p>
+          </div>
+        );
+      }
+    })();
+
+    var listContent = (() => {
+      if(this.state.dictionaries.size == 0) {
+        return (
+
+          <div className="item">
+            <div className="header" style={{'text-align':'center'}}>
+              <p>{tr('You have no dictionaries yet.')}</p>
+              <p>{tr('You can create right now.')}</p>
+              {loading}
+            </div>
+          </div>
+
+        );
+      }
+      else {
+        return (
+          <DictionaryList dictionaries={this.state.dictionaries} />
+        );
+      }
+    })();
+
     return (
       <DocumentTitle title={tr('Cevirgec › Dictionaries')}>
         <div className="ui segments">
@@ -48,32 +90,7 @@ class Dictionaries extends Component {
           </div>
 
           <div className="ui grey segment">
-            <div className="ui middle aligned divided list">
-              {Object.getOwnPropertyNames(this.state.dictionaries.toObject()).map(function (dictionary) {
-                return (
-                  <div className="item">
-                    <div className="right floated content">
-                      <button className="ui icon button" data-content={tr('Add a new word to this dictionary')}> <i className="add icon"></i> </button>
-                      <button className="ui icon button" data-content={tr('Print')}> <i className="print icon"></i> </button>
-                      <button className="ui icon button" data-content={tr('View dictionary content')}> <i className="unhide icon"></i> </button>
-                      <button className="ui icon button" data-content={tr('Edit')}> <i className="edit icon"></i> </button>
-                    </div>
-
-                    <div className="left floated content">
-                      <div className="ui toggle checkbox" data-content={tr('Use this dictionary')}>
-                        <input type="checkbox" tabindex="0" class="hidden" />
-                        <label>{dictionary}</label>
-                      </div>
-                    </div>
-
-                    <div className="content">
-                      <div className="header">Add new word</div>
-                      <div className="description">{tr('Binding result:')} <h5 className="ui green header">Successful</h5></div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+            {listContent}
           </div>
         </div>
       </DocumentTitle>
