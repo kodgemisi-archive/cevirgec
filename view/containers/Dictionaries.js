@@ -13,6 +13,7 @@ import DataSourceDispatcher, {dispatch} from '../dispatcher/DataSourceDispatcher
 import Constants from '../utils/constants';
 import DictionaryStore from '../stores/DictionaryStore';
 import DictionaryList from '../components/DictionaryList';
+import DictionaryModal from '../components/DictionaryModal';
 
 import tr from '../utils/Translation';
 
@@ -48,6 +49,20 @@ class Dictionaries extends Component {
     $('[data-content]').popup();
   }
 
+  showModal(dictionary) {
+    this.setState({
+      selectedDictionary: dictionary,
+      showModal: true
+    });
+  }
+
+  onModalHidden() {
+    this.setState({
+      selectedDictionary: null,
+      showModal: false
+    });
+  }
+
   render() {
 
     var loading = (() => {
@@ -65,7 +80,7 @@ class Dictionaries extends Component {
         return (
 
           <div className="item">
-            <div className="header" style={{'text-align':'center'}}>
+            <div className="header" style={{'textAlign':'center'}}>
               <p>{tr('You have no dictionaries yet.')}</p>
               <p>{tr('You can create right now.')}</p>
               {loading}
@@ -76,7 +91,7 @@ class Dictionaries extends Component {
       }
       else {
         return (
-          <DictionaryList dictionaries={this.state.dictionaries} />
+          <DictionaryList dictionaries={this.state.dictionaries} showModalFn={this.showModal.bind(this)} />
         );
       }
     })();
@@ -92,6 +107,8 @@ class Dictionaries extends Component {
           <div className="ui grey segment">
             {listContent}
           </div>
+
+          <DictionaryModal dictionary={this.state.selectedDictionary} show={this.state.showModal}  onHidden={this.onModalHidden.bind(this)} />
         </div>
       </DocumentTitle>
     );

@@ -12,8 +12,19 @@ import DocumentTitle from 'react-document-title';
 import tr from '../utils/Translation';
 
 class Dictionaries extends Component {
+
+  componentDidMount() {
+    jQuery('.ui.checkbox').checkbox();
+  }
+
+  edit(dictionaryId, event) {
+    var dictionaryMap = this.props.dictionaries.toObject();
+    this.props.showModalFn(dictionaryMap[dictionaryId]);
+  }
+
   render() {
     var dictionaryMap = this.props.dictionaries.toObject();
+    var that = this;
     return (
       <div className="ui middle aligned divided list">
         {Object.getOwnPropertyNames(dictionaryMap).map(function (key) {
@@ -24,12 +35,12 @@ class Dictionaries extends Component {
                 <button className="ui icon button" data-content={tr('Add a new word to this dictionary')}> <i className="add icon"></i> </button>
                 <button className="ui icon button" data-content={tr('Print')}> <i className="print icon"></i> </button>
                 <button className="ui icon button" data-content={tr('View dictionary content')}> <i className="unhide icon"></i> </button>
-                <button className="ui icon button" data-content={tr('Edit')}> <i className="edit icon"></i> </button>
+                <button className="ui icon button" data-content={tr('Edit')} onClick={that.edit.bind(that, dictionary.id)}> <i className="edit icon"></i> </button>
               </div>
 
               <div className="left floated content">
                 <div className="ui toggle checkbox" data-content={tr('Use this dictionary')}>
-                  <input type="checkbox" tabindex="0" class="hidden" checked={dictionary.active} />
+                  <input type="checkbox" tabIndex="0" className="hidden" checked={dictionary.active} />
                   <label></label>
                 </div>
               </div>
