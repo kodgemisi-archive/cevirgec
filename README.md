@@ -1,4 +1,4 @@
-open 3 tabs
+open 3 tabs. For each tab `nvm use v4.1.1`
 
 ```
 npm run hot-dev-server
