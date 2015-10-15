@@ -5,20 +5,38 @@
 
 var keyMirror = require('react/lib/keyMirror');
 
+
+// Events that are handled by main process has `_IPC` suffix
+// All other events regardless of where they are created has no suffix nor prefix
 module.exports = keyMirror({
 
-  // DictionaryDao
-  DICTIONARY_CREATE: null,
-  DICTIONARY_DESTROY: null,
+  // Dictionary
+  CREATE_DICTIONARY: null,
+  UPDATE_DICTIONARY: null,
+  DESTROY_DICTIONARY: null,
   LOAD_DICTIONARIES: null,
 
-  // DictionaryStore
   DICTIONARIES_LOADED: null,
   DICTIONARY_ADDED: null,
-
-  // IPC
-  DICTIONARY_CREATE_IPC: null,
-  DICTIONARY_CREATED_IPC: null,
+  CREATE_DICTIONARY_IPC: null,
+  DICTIONARY_CREATED: null,
+  UPDATE_DICTIONARY_IPC: null,
+  DICTIONARY_UPDATED_IPC: null,
   DICTIONARIES_LOADED_IPC: null,
-  LOAD_DICTIONARIES_IPC: null
+  LOAD_DICTIONARIES_IPC: null,
+
+  // Definition
+  CREATE_DEFINITION: null,
+  CREATE_DEFINITION_IPC: null,
+  DEFINITION_CREATED: null,
+
+  UPDATE_DEFINITION: null,
+  UPDATE_DEFINITION_IPC: null,
+  DEFINITION_UPDATED: null,
+
+  LOAD_DEFINITIONS: null,
+  LOAD_DEFINITIONS_IPC: null,
+  DEFINITIONS_LOADED: null,
+
+  __lastItem__: null
 });

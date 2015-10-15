@@ -13,7 +13,7 @@ import tr from '../utils/Translation';
 import {dispatch} from '../dispatcher/DataSourceDispatcher';
 import Constants from '../utils/constants';
 
-class DictionaryModal extends Component {
+class DefinitionModal extends Component {
 
   DOMElement = null;
   formElement = null;
@@ -56,13 +56,13 @@ class DictionaryModal extends Component {
 
     if(this.saveMode) {
       dispatch({
-        type: Constants.CREATE_DICTIONARY,
+        type: Constants.CREATE_DEFINITION,
         data: data
       });
     }
     else {
       dispatch({
-        type: Constants.UPDATE_DICTIONARY,
+        type: Constants.UPDATE_DEFINITION,
         data: data
       });
     }
@@ -70,11 +70,11 @@ class DictionaryModal extends Component {
 
   render() {
 
-    var dictionary = this.props.dictionary || {};
-    this.saveMode = typeof dictionary.id === 'undefined' ? true : false;
+    var definition = this.props.definition || {};
+    this.saveMode = typeof definition.id === 'undefined' ? true : false;
 
     return (
-      <section id="shortcutEditModal" className="ui modal" ref={(c) => {c ? this.DOMElement = c.getDOMNode() : ''}}>
+      <section id="definitionModal" className="ui modal" ref={(c) => {c ? this.DOMElement = c.getDOMNode() : ''}}>
         <i className="close icon"></i>
         <div className="header">
           {this.saveMode ? tr('New Dictionary') : tr('Update Dictionary')}
@@ -82,30 +82,14 @@ class DictionaryModal extends Component {
         <div className="content">
 
           <form className="ui form" ref={(c) => {c ? this.formElement = c.getDOMNode() : ''}}>
+            <input type="hidden" name="dictionaryId" value={this.props.dictionaryId} />
             <div className="field">
               <label>Name</label>
-              <input type="text" name="name" placeholder="Name" value={dictionary.name} />
+              <input type="text" name="key" placeholder="Word/Phrase" value={definition.key} />
             </div>
             <div className="field">
               <label>Description</label>
-              <input type="text" name="description" placeholder="Description" value={dictionary.description} />
-            </div>
-            <div className="two fields">
-              <div className="field">
-                <label>{tr('Source Language')}</label>
-                <LanguageSelect name="sourceLanguage" value={dictionary.sourceLanguage} defaultText={tr('Please select')} />
-              </div>
-
-              <div className="field">
-                <label>{tr('Target Language')}</label>
-                <LanguageSelect name="targetLanguage" value={dictionary.targetLanguage} defaultText={tr('Please select')} />
-              </div>
-            </div>
-            <div className="field">
-              <div className="ui toggle checkbox">
-                <input type="checkbox" tabIndex="0" className="hidden" name="active" value={dictionary.active} />
-                <label>In use</label>
-              </div>
+              <input type="text" name="value" placeholder="Definition" value={definition.value} />
             </div>
           </form>
 
@@ -124,4 +108,4 @@ class DictionaryModal extends Component {
   }
 }
 
-export default DictionaryModal;
+export default DefinitionModal;

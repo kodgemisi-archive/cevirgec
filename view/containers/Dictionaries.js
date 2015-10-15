@@ -14,10 +14,15 @@ import Constants from '../utils/constants';
 import DictionaryStore from '../stores/DictionaryStore';
 import DictionaryList from '../components/DictionaryList';
 import DictionaryModal from '../components/DictionaryModal';
+import DefinitionModal from '../components/DefinitionModal';
 
 import tr from '../utils/Translation';
 
 class Dictionaries extends Component {
+
+  _triggerJqueryPlugins() {
+    jQuery('[data-content]').popup();
+  }
 
   static getStores(): Array<Store> {
     return [DictionaryStore];
@@ -25,18 +30,9 @@ class Dictionaries extends Component {
 
   static calculateState(prevState: ?State): State {
     return {
-      dictionaries : DictionaryStore.getState(),
+      dictionaries : DictionaryStore.getDictionaries(),
       isLoading: DictionaryStore.isLoading()
     }
-  }
-
-  _createDictionary() {
-    DataSourceDispatcher.dispatch({
-      type: Constants.DICTIONARY_CREATE,
-      data: {
-        name: 'zaa test'
-      }
-    });
   }
 
   componentWillMount() {
@@ -46,20 +42,38 @@ class Dictionaries extends Component {
   }
 
   componentDidMount() {
-    $('[data-content]').popup();
+    this._triggerJqueryPlugins();
   }
 
-  showModal(dictionary) {
+  componentDidUpdate() {
+    this._triggerJqueryPlugins();
+  }
+
+  showDictionaryModal(dictionary) {
     this.setState({
       selectedDictionary: dictionary,
-      showModal: true
+      isDictionaryModalVisible: true
     });
   }
 
-  onModalHidden() {
+  onDictionaryModalHidden() {
     this.setState({
       selectedDictionary: null,
-      showModal: false
+      isDictionaryModalVisible: false
+    });
+  }
+
+  showDefinitionModal(dictionaryId){
+    this.setState({
+      dictionaryId: dictionaryId,
+      isDefinitionModalVisible: true
+    });
+  }
+
+  onDefinitionModalHidden() {
+    this.setState({
+      dictionaryId: null,
+      isDefinitionModalVisible: false
     });
   }
 
@@ -91,7 +105,7 @@ class Dictionaries extends Component {
       }
       else {
         return (
-          <DictionaryList dictionaries={this.state.dictionaries} showModalFn={this.showModal.bind(this)} />
+          <DictionaryList dictionaries={this.state.dictionaries} showDictionaryModalFn={this.showDictionaryModal.bind(this)} showDefinitionModalFn={this.showDefinitionModal.bind(this)} />
         );
       }
     })();
@@ -101,14 +115,15 @@ class Dictionaries extends Component {
         <div className="ui segments">
           <div className="ui clearing segment">
             <h3 className="ui left floated header">{tr('Dictionaries')}</h3>
-            <button onClick={this._createDictionary} className="ui icon primary button right floated" data-content={tr('Add new')}> <i className="add circle icon"></i> </button>
+            <button onClick={this.showDictionaryModal.bind(this)} className="ui icon primary button right floated" data-content={tr('Add new')}> <i className="add circle icon"></i> </button>
           </div>
 
           <div className="ui grey segment">
             {listContent}
           </div>
 
-          <DictionaryModal dictionary={this.state.selectedDictionary} show={this.state.showModal}  onHidden={this.onModalHidden.bind(this)} />
+          <DictionaryModal show={this.state.isDictionaryModalVisible}  dictionary={this.state.selectedDictionary} onHidden={this.onDictionaryModalHidden.bind(this)} />
+          <DefinitionModal show={this.state.isDefinitionModalVisible} dictionaryId={this.state.dictionaryId} onHidden={this.onDefinitionModalHidden.bind(this)} />
         </div>
       </DocumentTitle>
     );

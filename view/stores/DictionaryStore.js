@@ -19,21 +19,23 @@ type State = Immutable.OrderedMap<string, Dictionary>;
 
 class DictionaryStore extends ReduceStore<string, Dictionary> {
 
-  _isLoading = true;
-
   getInitialState(): State {
-    return Immutable.OrderedMap();
+    var state = {
+      isLoading: true,
+      dictionaries: Immutable.OrderedMap()
+    }
+
+    return new Immutable.Map(state);
   }
 
   reduce (state: State, action: Action): State {
     switch (action.type) {
 
       case Constants.DICTIONARIES_LOADED:
-        this._isLoading = false;
-        return action.data;
+        return state.set('isLoading', false).set('dictionaries', action.data);
 
       case Constants.DICTIONARY_ADDED:
-        return state.set(action.data.id, action.data);
+        return state.setIn(['dictionaries', action.data.id], action.data);
 
       default:
         return state;
@@ -41,7 +43,11 @@ class DictionaryStore extends ReduceStore<string, Dictionary> {
   }
 
   isLoading(): boolean {
-    return this._isLoading;
+    return this.getState().get('isLoading');
+  }
+
+  getDictionaries() {
+    return this.getState().get('dictionaries');
   }
 }
 

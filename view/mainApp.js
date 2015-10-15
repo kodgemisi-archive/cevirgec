@@ -13,6 +13,8 @@ import DictionaryDao from './dao/DictionaryDao';
 
 import { Router, Route, IndexRoute, Redirect, Link } from 'react-router';
 
+import 'form-serializer'; // jQuery form serializer plugin, usage: $('form').serializeObject()
+
 import './app.scss';
 
 // See https://github.com/atom/electron/issues/254

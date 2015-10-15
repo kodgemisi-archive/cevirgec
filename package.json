@@ -11,7 +11,7 @@
     "build": "webpack --config webpack/webpack.config.production.js --progress --profile --colors",
     "start": "electron .",
     "start-dev": "NODE_ENV=development electron .",
-    "start-hot": "HOT=1 NODE_ENV=development electron --debug .",
+    "start-hot": "HOT=1 NODE_ENV=development electron --debug=5858 .",
     "package": "node package.js",
     "package-all": "node package.js --all"
   },
@@ -56,6 +56,7 @@
     "extend": "^3.0.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
+    "form-serializer": "^2.5.0",
     "fs-jetpack": "^0.7.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.0.2",

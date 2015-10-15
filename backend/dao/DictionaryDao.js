@@ -9,18 +9,7 @@ var Dictionary = require('../model/Dictionary');
 
 var Constants = require('../../view/utils/constants');
 
-class DictionaryDao {
-  constructor() {
-  }
-
-  create(dictionary) {
-    return Dictionary.create({
-      name: 'bilisim'
-    });
-  }
-}
-
-var dictionaryDao = new DictionaryDao();
+var dictionaryDao = 'DAOs are event based so we only initialize them on main.js but not need to expilictly use them';
 
 ipc.on(Constants.LOAD_DICTIONARIES_IPC, function(event, data) {
   console.log('LOAD_DICTIONARIES_IPC');
@@ -29,7 +18,7 @@ ipc.on(Constants.LOAD_DICTIONARIES_IPC, function(event, data) {
     .then(function (resultArray) {
       var values = resultArray
         .map(function (entity) {
-          return entity.dataValues;
+          return entity.toJSON();
         });
 
       event.sender.send(Constants.DICTIONARIES_LOADED_IPC, values);
@@ -37,12 +26,12 @@ ipc.on(Constants.LOAD_DICTIONARIES_IPC, function(event, data) {
 
 });
 
-ipc.on(Constants.DICTIONARY_CREATE_IPC, function(event, dictionaryObj) {
-  console.log('DICTIONARY_CREATE_IPC', dictionaryObj);
+ipc.on(Constants.CREATE_DICTIONARY_IPC, function(event, dictionaryObj) {
+  console.log(Constants.CREATE_DICTIONARY_IPC, dictionaryObj);
 
   Dictionary.create(dictionaryObj)
     .then(function (createdModel) {
-      event.sender.send(Constants.DICTIONARY_CREATED_IPC, createdModel.dataValues);
+      event.sender.send(Constants.DICTIONARY_CREATED, createdModel.toJSON());
     });
 
 });

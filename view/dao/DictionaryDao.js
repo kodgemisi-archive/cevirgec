@@ -23,15 +23,19 @@ class DictionaryDao extends ReduceStore<string, Dictionary> {
 
   reduce (state: State, action: Action): State {
     switch (action.type) {
-      case Constants.DICTIONARY_DESTROY:
+      case Constants.DESTROY_DICTIONARY:
         return state;
 
-      case Constants.DICTIONARY_CREATE:
-        ipc.send(Constants.DICTIONARY_CREATE_IPC, action.data);
+      case Constants.CREATE_DICTIONARY:
+        ipc.send(Constants.CREATE_DICTIONARY_IPC, action.data);
         return state;
 
       case Constants.LOAD_DICTIONARIES:
         ipc.send(Constants.LOAD_DICTIONARIES_IPC, true);
+        return state;
+
+      case Constants.CREATE_DEFINITION:
+        ipc.send(Constants.CREATE_DEFINITION_IPC, action.data);
         return state;
 
       default:
@@ -48,7 +52,7 @@ class DictionaryDao extends ReduceStore<string, Dictionary> {
 // you want to avoid singletons.
 const dictionaryDao = new DictionaryDao(DataSourceDispatcher);
 
-ipc.on(Constants.DICTIONARY_CREATED_IPC, function(newDictionary) {
+ipc.on(Constants.DICTIONARY_CREATED, function(newDictionary) {
   AppDispatcher.dispatch({
     type: Constants.DICTIONARY_ADDED,
     data: newDictionary

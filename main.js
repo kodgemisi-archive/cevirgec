@@ -29,17 +29,13 @@ var shortcutHelper = require('./backend/ShortcutHelper');
 var Sequelize = require('sequelize');
 
 require('./backend/dao/DictionaryDao');
+require('./backend/dao/DefinitionDao');
 
 var trayIcon = null;
 
 app.on('ready', function () {
-
-  testDatabase();
-
   initializeSystemTray();
-
   shortcutHelper.registerGlobalShortcuts();
-
 });
 
 function initializeSystemTray() {
@@ -62,27 +58,6 @@ function initializeSystemTray() {
     ]);
   trayIcon.setToolTip('This is my application.');
   trayIcon.setContextMenu(contextMenu);
-}
-
-function testDatabase() {
-
-  Definition.create({
-    key: 'javascript',
-    value: 'javaynan ayni',
-    usage: 'var',
-    notes: '--',
-    type: 'NOUN',
-    sex: 'NEUTER'
-  });
-
-  Dictionary.create({
-    name: 'bilisim'
-  });
-
-  OnlineSource.create({
-    url: 'example.com'
-  });
-
 }
 
 // Event bindings

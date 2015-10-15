@@ -1,4 +1,4 @@
-/* Copyright (c) 2015 Kod Gemisi Ltd. 
+/* Copyright (c) 2015 Kod Gemisi Ltd.
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
@@ -60,6 +60,11 @@ var Definition = sequelize.define('definition', {
 },
 {
   freezeTableName: true
+});
+
+Definition.beforeCreate(function(definition, options) {
+  // FIXME use a key-maker function
+  definition.key = definition.key.toLowerCase().trim();
 });
 
 module.exports = Definition;

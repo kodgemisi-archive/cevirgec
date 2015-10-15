@@ -19,7 +19,11 @@ class Dictionaries extends Component {
 
   edit(dictionaryId, event) {
     var dictionaryMap = this.props.dictionaries.toObject();
-    this.props.showModalFn(dictionaryMap[dictionaryId]);
+    this.props.showDictionaryModalFn(dictionaryMap[dictionaryId]);
+  }
+
+  addDefinitionToDictionary(dictionaryId) {
+    this.props.showDefinitionModalFn(dictionaryId);
   }
 
   render() {
@@ -32,7 +36,7 @@ class Dictionaries extends Component {
           return (
             <div className="item">
               <div className="right floated content">
-                <button className="ui icon button" data-content={tr('Add a new word to this dictionary')}> <i className="add icon"></i> </button>
+                <button className="ui icon button" data-content={tr('Add a new word to this dictionary')} onClick={that.addDefinitionToDictionary.bind(that, dictionary.id)}> <i className="add icon"></i> </button>
                 <button className="ui icon button" data-content={tr('Print')}> <i className="print icon"></i> </button>
                 <button className="ui icon button" data-content={tr('View dictionary content')}> <i className="unhide icon"></i> </button>
                 <button className="ui icon button" data-content={tr('Edit')} onClick={that.edit.bind(that, dictionary.id)}> <i className="edit icon"></i> </button>
@@ -47,7 +51,7 @@ class Dictionaries extends Component {
 
               <div className="content">
                 <div className="header">{dictionary.name}</div>
-                <div className="description">{dictionary.sourceLanguage} => {dictionary.targetLanguage}</div>
+                <div className="description">{dictionary.sourceLanguage} => {dictionary.targetLanguage} | {dictionary.numberOfDefinitions} definitions</div>
               </div>
             </div>
           )

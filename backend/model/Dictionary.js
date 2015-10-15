@@ -9,6 +9,8 @@ var Sequelize = require('sequelize');
 var sequelize = require('../Sequelize');
 var Definition = require('./Definition');
 
+var numberOfDefinitionsCache = {};
+
 var Dictionary = sequelize.define('dictionary', {
   id: {
     type: Sequelize.INTEGER,
@@ -32,6 +34,15 @@ var Dictionary = sequelize.define('dictionary', {
   },
   active: {
     type: Sequelize.BOOLEAN
+  },
+  numberOfDefinitions: {
+    type: Sequelize.VIRTUAL,
+    get: function () {
+      return numberOfDefinitionsCache[this.get('id')] || 0;
+    },
+    set: function (num) {
+      numberOfDefinitionsCache[this.get('id')] = num;
+    }
   }
 },
 {
@@ -40,7 +51,28 @@ var Dictionary = sequelize.define('dictionary', {
 
 Dictionary.hasMany(Definition);
 
+// Need to place here to avoid cyclic dependency between Dictionary and Definition
+// Keep  `numberOfDefinitions` calculated field up-to-date
+Definition.afterCreate(function(definition, options) {
+  Dictionary.findById(definition.dictionaryId).then(function (dictionary) {
+    dictionary.getDefinitions().then(function (definitions) {
+      dictionary.set('numberOfDefinitions', definitions.length);
+    })
+  });
+});
+
 Dictionary.sync();
 Definition.sync();// use here in order associations to take effect
+
+// Calculate initial `numberOfDefinitions`
+Dictionary.findAll().then(function (dictionaries) {
+  dictionaries.forEach(function (dictionary) {
+
+    // FIXME use count query
+    dictionary.getDefinitions().then(function (definitions) {
+      dictionary.set('numberOfDefinitions', definitions.length);
+    })
+  });
+})
 
 module.exports = Dictionary;
