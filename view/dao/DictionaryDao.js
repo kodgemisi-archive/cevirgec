@@ -71,5 +71,15 @@ ipc.on(Constants.DICTIONARIES_LOADED_IPC, function(dictionaryArray) {
   });
 });
 
+ipc.on(Constants.DEFINITION_CREATED, function(newDefinition) {
+
+  // TODO need to handle this event, definition count not updated on dictionaries page
+
+  // AppDispatcher.dispatch({
+  //   type: Constants.DEFINITION_CREATED,
+  //   data: newDefinition
+  // });
+});
+
 
 export default dictionaryDao;
