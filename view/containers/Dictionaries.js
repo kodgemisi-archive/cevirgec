@@ -10,6 +10,7 @@ import {Container} from 'flux/utils';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
 import DataSourceDispatcher, {dispatch} from '../dispatcher/DataSourceDispatcher';
+import AppDispatcher from '../dispatcher/AppDispatcher';
 import Constants from '../utils/constants';
 import DictionaryStore from '../stores/DictionaryStore';
 import DictionaryList from '../components/DictionaryList';
@@ -43,6 +44,14 @@ class Dictionaries extends Component {
 
   componentDidMount() {
     this._triggerJqueryPlugins();
+
+    // GOTCHA if you place this code in `componentWillMount` it won't work because god knows why
+    // BreadcrumbStore would catch and handle the event but Breadcrumb component's calculateState
+    // wouldn't be called!
+    AppDispatcher.dispatch({
+      type: Constants.NEW_ROUTE_AVAILABLE,
+      data: this.props.routes
+    });
   }
 
   componentDidUpdate() {

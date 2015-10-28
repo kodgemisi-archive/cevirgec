@@ -7,9 +7,19 @@
 
 import React, {Component} from 'react';
 import { Link } from 'react-router';
+import AppDispatcher from '../dispatcher/AppDispatcher';
+import Constants from '../utils/constants';
 import SideMenu from '../components/SideMenu';
 
 class Settings extends Component {
+
+  componentDidMount() {
+    AppDispatcher.dispatch({
+      type: Constants.NEW_ROUTE_AVAILABLE,
+      data: this.props.routes
+    });
+  }
+
   render() {
     return (
       <div className="ui grid">

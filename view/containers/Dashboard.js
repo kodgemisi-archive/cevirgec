@@ -12,6 +12,7 @@ import DictionaryStore from '../stores/DictionaryStore';
 import Constants from '../utils/constants';
 import {dispatch} from '../dispatcher/AppDispatcher';
 import {Container} from 'flux/utils';
+import AppDispatcher from '../dispatcher/AppDispatcher';
 
 import { Link } from 'react-router';
 
@@ -27,6 +28,13 @@ class Dashboard extends Component {
 
   static calculateState(prevState: ?State): State {
     return {};
+  }
+
+  componentDidMount() {
+    AppDispatcher.dispatch({
+      type: Constants.NEW_ROUTE_AVAILABLE,
+      data: [] // to hide the breadcrumbs
+    });
   }
 
   render() {

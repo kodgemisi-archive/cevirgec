@@ -34,16 +34,16 @@ var content = document.getElementById('react-root');
 
 var Routes = (
   <Router>
-    <Route path="/" component={Main}>
+    <Route path="/" component={Main} name="Dashboard">
     	<Redirect from="settings" to="/settings/options" />
       <Redirect from="dictionaries" to="/dictionaries/list" />
       <IndexRoute component={Dashboard}/>
       <Route path="dashboard" component={Dashboard} />
-      <Route path="settings" component={Settings}>
+      <Route path="settings" component={Settings} name="Settings">
         <Route path="options" component={Options} />
         <Route path="shortcuts" component={Shortcuts} />
       </Route>
-      <Route path="dictionaries" component={Dictionaries}>
+      <Route path="dictionaries" component={Dictionaries} name="Dictionaries" >
         <Route path="list" component={DictionaryList} />
       </Route>
     </Route>

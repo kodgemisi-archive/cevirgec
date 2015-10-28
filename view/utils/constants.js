@@ -10,6 +10,8 @@ var keyMirror = require('react/lib/keyMirror');
 // All other events regardless of where they are created has no suffix nor prefix
 module.exports = keyMirror({
 
+  NEW_ROUTE_AVAILABLE: null,
+
   // Dictionary
   CREATE_DICTIONARY: null,
   UPDATE_DICTIONARY: null,
